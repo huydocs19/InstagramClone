@@ -1,25 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_margin="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/ivPhotoCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="0dp"
+            app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
+        <ImageView
+            android:id="@+id/ivInstagram"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="55dp"
+            app:srcCompat="@drawable/nav_logo_whiteout" />
+
+        <ImageView
+            android:id="@+id/ivInbox"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/nav_inbox_paper_plane"
+            tools:layout_marginStart="35dp" />
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation"/>
+        android:layout_above="@id/bottomNavigation"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="0dp">
+
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/teal_200"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
+        app:itemTextColor="@drawable/bottom_navigation_color_selector"
         app:menu="@menu/menu_bottom_navigation" />
 
 </RelativeLayout>
