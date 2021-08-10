@@ -22,18 +22,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.codepath.instagramclone.MainActivity;
 import com.codepath.instagramclone.Post;
 import com.codepath.instagramclone.R;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,7 +45,7 @@ public class ComposeFragment extends Fragment {
     private Button btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
-    private File photoFile;
+    private static File photoFile;
     private String photoFileName = "photo.png";
 
     public ComposeFragment() {
@@ -57,9 +53,9 @@ public class ComposeFragment extends Fragment {
     }
 
 
-    public static ComposeFragment newInstance() {
+    public static ComposeFragment newInstance(File pictureFile) {
         ComposeFragment fragment = new ComposeFragment();
-
+        photoFile = pictureFile;
         return fragment;
     }
 
@@ -89,13 +85,20 @@ public class ComposeFragment extends Fragment {
         etDescription = view.findViewById(R.id.etDescription);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
+
+        // by this point we have the camera photo on disk
+        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        // RESIZE BITMAP, see section below
+        // Load the taken image into a preview
+        ivPostImage.setImageBitmap(takenImage);
+
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnCaptureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCamera();
-            }
-        });
+//        btnCaptureImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchCamera();
+//            }
+//        });
 
         // queryPosts();
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +115,10 @@ public class ComposeFragment extends Fragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
+                getActivity().getSupportFragmentManager().beginTransaction().remove(ComposeFragment.this).commit();
             }
         });
+
     }
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
@@ -135,21 +140,21 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ivPostImage.setImageBitmap(takenImage);
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                // by this point we have the camera photo on disk
+//                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+//                // RESIZE BITMAP, see section below
+//                // Load the taken image into a preview
+//                ivPostImage.setImageBitmap(takenImage);
+//            } else { // Result was a failure
+//                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();

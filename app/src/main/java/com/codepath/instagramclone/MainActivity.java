@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.codepath.instagramclone.fragments.ComposeFragment;
 import com.codepath.instagramclone.fragments.PostsFragment;
 import com.codepath.instagramclone.fragments.ProfileFragment;
+import com.codepath.instagramclone.fragments.TakePhotoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -50,16 +51,20 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         fragment = new PostsFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         break;
                     case R.id.action_compose:
-                        fragment = new ComposeFragment();
+                        TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
+                        takePhotoFragment.show(fragmentManager, "fragment_take_photo");
+                        //fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
                     default:
                         fragment = new ProfileFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         break;
                 }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+
                 return true;
             }
         });
