@@ -1,9 +1,16 @@
 package com.codepath.instagramclone;
 
 import android.app.Application;
+import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.codepath.instagramclone.fragments.ProfileFragment;
+import com.parse.LogOutCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class ParseApplication extends Application {
     @Override
@@ -21,6 +28,7 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
 
     }
 }

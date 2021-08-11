@@ -26,10 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.hide();
-
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogout);
@@ -52,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick login button");
+                Log.i(TAG, "onClick signup button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 signUpUser(username, password);
@@ -86,13 +82,13 @@ public class LoginActivity extends AppCompatActivity {
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
-                if (e == null) {
-                    Log.e(TAG, "Issue with sign up", e);
-                    Toast.makeText(LoginActivity.this, "Issue with sign up!", Toast.LENGTH_SHORT).show();
+                if (e != null) {
+                    Log.e(TAG, "Issue with signup", e);
+                    Toast.makeText(LoginActivity.this, "Issue with signup", Toast.LENGTH_SHORT).show();
                     return;
-                } else {
-                    loginUser(username, password);
                 }
+                goMainActivity();
+                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
             }
         });
     }
