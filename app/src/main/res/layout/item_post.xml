@@ -17,6 +17,7 @@
         android:layout_marginBottom="109dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
         tools:text="steve" />
 
     <ImageView
@@ -42,13 +43,23 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="0dp"
+        tools:srcCompat="@drawable/ufi_more" />
 
     <ImageView
         android:id="@+id/ivHeart"
@@ -72,8 +83,8 @@
 
     <ImageView
         android:id="@+id/ivNewDirect"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:layout_below="@+id/ivImage"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"

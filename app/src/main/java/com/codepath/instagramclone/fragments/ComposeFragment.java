@@ -42,7 +42,6 @@ public class ComposeFragment extends Fragment {
     public final static String TAG = "ComposeFragment";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private EditText etDescription;
-    private Button btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
     private static File photoFile;
@@ -83,7 +82,6 @@ public class ComposeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etDescription = view.findViewById(R.id.etDescription);
-        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
 
         // by this point we have the camera photo on disk
@@ -116,6 +114,8 @@ public class ComposeFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
                 getActivity().getSupportFragmentManager().beginTransaction().remove(ComposeFragment.this).commit();
+                TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
+                takePhotoFragment.show(getActivity().getSupportFragmentManager(), "fragment_take_photo");
             }
         });
 

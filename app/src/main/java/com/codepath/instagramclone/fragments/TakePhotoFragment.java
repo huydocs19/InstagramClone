@@ -1,11 +1,14 @@
 package com.codepath.instagramclone.fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
@@ -13,15 +16,20 @@ import androidx.fragment.app.DialogFragment;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.codepath.instagramclone.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 
@@ -53,6 +61,14 @@ public class TakePhotoFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Window window = getDialog().getWindow();
+
+        // set gravity
+        window.setGravity(Gravity.BOTTOM|Gravity.CENTER);
+        // then set the values to where you want to position it
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = 150;
+        window.setAttributes(params);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_take_photo, container, false);
     }
@@ -73,7 +89,10 @@ public class TakePhotoFragment extends DialogFragment {
         });
 
 
+
+
     }
+
 
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application

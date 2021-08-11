@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseFile;
 
 import java.util.List;
@@ -62,7 +63,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvUsername.setText(post.getUser().getUsername());
             ParseFile profileImage = post.getProfileImage();
             if (profileImage != null) {
-                Glide.with(context).load(profileImage.getUrl()).into(ivProfileImage);
+                Glide.with(context).load(profileImage.getUrl())
+                        .centerCrop() // scale image to fill the entire ImageView
+                        .transform(new CircleCrop())
+                        .into(ivProfileImage);
             }
             ParseFile image = post.getImage();
             if (image != null) {
